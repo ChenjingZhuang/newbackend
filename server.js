@@ -19,6 +19,7 @@ requiredEnvVars.forEach((envVar) => {
     }
 });
 
+// Set up the app
 const app = express();
 app.use(cors({
   origin: ['https://white-sea-005d2ea03.6.azurestaticapps.net', 'http://localhost:3001'],
@@ -28,6 +29,7 @@ app.use(express.json());
 app.use(helmet());
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
 
+const port = 3001;
 
 const pool = new Pool({
     user: process.env.PG_USER,
@@ -40,7 +42,6 @@ const pool = new Pool({
     }
 });
 
-// Connect to the database
 pool.connect()
     .then(() => console.log('✅ Connected to PostgreSQL'))
     .catch((err) => {
@@ -113,35 +114,16 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// Health check route
-app.get('/api/health', (req, res) => {
-  res.status(200).send('OK');
-});
-
 const distPath = path.join(__dirname, '../frontend/dist');
 app.use(express.static(distPath));
-
-
-
-// For all other GET requests, serve the frontend's index.html file (for SPA routing)
 app.use((req, res, next) => {
     if (req.method === 'GET' && !req.path.startsWith('/api')) {
         res.sendFile(path.join(distPath, 'index.html'));
     } else {
         next();
-    }
-});
+}));
 
-// Handle 404 - Not Found
-app.use((req, res) => {
-    res.status(404).json({ error: 'Route not found' });
-});
-
-// Add a simple root route for health checks
-app.get('/', (req, res) => {
-    res.send('🐶 Dogs API is running!');
-});
 // Start server
-app.listen(port, '0.0.0.0', () => {
-    console.log(`🚀 Server running at http://0.0.0.0:${port}`);
+app.listen(port, () => {
+    console.log(`🚀 Server running at http://localhost:${port}`);
 });
