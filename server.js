@@ -21,7 +21,7 @@ requiredEnvVars.forEach((envVar) => {
 
 const app = express();
 app.use(cors({
-  origin: ['https://white-sea-005d2ea03.6.azurestaticapps.net', 'http://localhost:3000'],
+  origin: ['https://white-sea-005d2ea03.6.azurestaticapps.net', 'http://localhost:3001'],
   credentials: true
 }));
 app.use(express.json());
@@ -113,6 +113,10 @@ app.post('/login', async (req, res) => {
     }
 });
 
+// Health check route
+app.get('/api/health', (req, res) => {
+  res.status(200).send('OK');
+});
 
 const distPath = path.join(__dirname, '../frontend/dist');
 app.use(express.static(distPath));
@@ -138,7 +142,7 @@ app.use((req, res) => {
 });
 
 // Start server
-const port = process.env.PORT;
+const port = 8080;
 console.log(`🌍 Running in ${process.env.NODE_ENV || 'development'} mode`);
 app.listen(port, () => {
     console.log(`🚀 Server running at http://localhost:${port}`);
