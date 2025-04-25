@@ -138,7 +138,7 @@ app.use((req, res) => {
 });
 
 // Start server
-const port = Number(process.env.PORT) || 3001;
+const port = process.env.PORT;
 console.log(`🌍 Running in ${process.env.NODE_ENV || 'development'} mode`);
 app.listen(port, () => {
     console.log(`🚀 Server running at http://localhost:${port}`);
