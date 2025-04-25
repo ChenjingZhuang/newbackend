@@ -122,10 +122,6 @@ const distPath = path.join(__dirname, '../frontend/dist');
 app.use(express.static(distPath));
 
 
-// Add a simple root route for health checks
-app.get('/', (req, res) => {
-    res.send('🐶 Dogs API is running!');
-});
 
 // For all other GET requests, serve the frontend's index.html file (for SPA routing)
 app.use((req, res, next) => {
@@ -141,9 +137,11 @@ app.use((req, res) => {
     res.status(404).json({ error: 'Route not found' });
 });
 
+// Add a simple root route for health checks
+app.get('/', (req, res) => {
+    res.send('🐶 Dogs API is running!');
+});
 // Start server
-const port = 8080;
-console.log(`🌍 Running in ${process.env.NODE_ENV || 'development'} mode`);
-app.listen(port, () => {
-    console.log(`🚀 Server running at http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
