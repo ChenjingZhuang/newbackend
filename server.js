@@ -20,7 +20,10 @@ requiredEnvVars.forEach((envVar) => {
 });
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: ['https://white-sea-005d2ea03.6.azurestaticapps.net', 'http://localhost:3000'],
+  credentials: true
+}));
 app.use(express.json());
 app.use(helmet());
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
