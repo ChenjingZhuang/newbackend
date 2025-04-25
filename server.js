@@ -142,6 +142,6 @@ app.get('/', (req, res) => {
     res.send('🐶 Dogs API is running!');
 });
 // Start server
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+app.listen(port, '0.0.0.0', () => {
+    console.log(`🚀 Server running at http://0.0.0.0:${port}`);
 });
