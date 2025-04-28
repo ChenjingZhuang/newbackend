@@ -22,7 +22,7 @@ requiredEnvVars.forEach((envVar) => {
 
 const app = express();
 app.use(cors({
-    origin: ['https://white-sea-005d2ea03.6.azurestaticapps.net', 'http://localhost:3000','http://localhost:5173'],
+    origin: ['https://white-sea-005d2ea03.6.azurestaticapps.net', 'http://localhost:3000','http://localhost:5173','https://red-ocean-086fc7003.6.azurestaticapps.net'],
     credentials: true
 }));
 app.use(express.json());
